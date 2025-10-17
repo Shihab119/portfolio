@@ -1,123 +1,53 @@
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { styles } from "../styles";
-import { EarthCanvas } from "./canvas";
-import { slideIn } from "../utils/motion";
-import { SectionWrapper } from "../hoc";
-import emailjs from "@emailjs/browser";
-
-// template_49jw5yq
-// service_9gvq101
-// 3lDtCP31mFt_52s7F
+import React from 'react';
+import { motion } from 'framer-motion';
+import { styles } from '../styles';
+import { EarthCanvas } from './canvas';
+import { slideIn } from '../utils/motion';
+import { SectionWrapper } from '../hoc';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFacebook,
+  faLinkedin,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
 const Contact = () => {
-  const formRef = useRef();
-  const [form, setform] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [loading, setloading] = useState(false);
-  const handlechange = (e) => {
-    const { name, value } = e.target;
-    setform({ ...form, [name]: value });
-  };
-  const handlesubmit = (e) => {
-    e.preventDefault();
-    setloading(true);
-
-    // template_49jw5yq
-    // service_9gvq101
-    // 3lDtCP31mFt_52s7F
-
-    emailjs
-      .send(
-        "service_9gvq101",
-        "template_49jw5yq",
-        {
-          from_name: form.name,
-
-          from_email: form.email,
-
-          message: form.message,
-        },
-        "3lDtCP31mFt_52s7F"
-      )
-      .then(
-        () => {
-          setloading(false);
-          alert("Thank you. I will get back to you as soon as possible");
-          setform({
-            name: "",
-            email: "",
-            message: "",
-          });
-        },
-        (error) => {
-          setloading(false);
-          console.log(error);
-          alert("Something went wrong.");
-        }
-      );
-  };
   return (
     <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
+      {/* LEFT SIDE - TEXT + SOCIAL LINKS */}
       <motion.div
-        variants={slideIn("left", "tween", 0.2, 1)}
-        className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
+        variants={slideIn('left', 'tween', 0.2, 1)}
+        className="flex-[0.75] bg-black-100 p-8 rounded-2xl flex flex-col justify-center items-center"
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
 
-        <form
-          ref={formRef}
-          onSubmit={handlesubmit}
-          className="mt-12 flex flex-col gap-8"
-        >
-          <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">Your Name</span>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handlechange}
-              placeholder="what's your name?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-            />
-          </label>
-          <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">Your Email</span>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handlechange}
-              placeholder="what's your email?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-            />
-          </label>
-          <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">Your Message</span>
-            <textarea
-              rows={5}
-              type="text"
-              name="message"
-              value={form.message}
-              onChange={handlechange}
-              placeholder="what do you want to say?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-            />
-          </label>
-          <button
-            type="submit"
-            className="bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl"
+        <div className="text-blue-500 hover:text-blue-700 hover:scale-110 transition duration-300">
+          {/* Facebook */}
+          <a
+            href="https://www.facebook.com/dhrubo.shihab"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700 transition duration-300"
           >
-            {loading ? "Sending..." : "Send"}
-          </button>
-        </form>
+            <FontAwesomeIcon icon={faFacebook} size="3x" />
+          </a>
+
+          {/* LinkedIn */}
+          <a
+            href="https://www.linkedin.com/in/shihabul-alam-shihab-699008253/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:text-blue-600 transition duration-300"
+          >
+            <FontAwesomeIcon icon={faLinkedin} size="3x" />
+          </a>
+        </div>
       </motion.div>
+
+      {/* RIGHT SIDE - EARTH ANIMATION */}
       <motion.div
-        variants={slideIn("right", "tween", 0.2, 1)}
+        variants={slideIn('right', 'tween', 0.2, 1)}
         className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
       >
         <EarthCanvas />
@@ -126,4 +56,4 @@ const Contact = () => {
   );
 };
 
-export default SectionWrapper(Contact, "contact");
+export default SectionWrapper(Contact, 'contact');
